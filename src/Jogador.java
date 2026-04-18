@@ -5,54 +5,50 @@ public class Jogador {
     int defesa;
     int nivel;
     int experiencia;
-    int quantidadePocoes;
-    int quantidadeBombas;
-    int quantidadeEscudos;
     boolean escudoAtivo;
+    Inventario inventario;
 
     public Jogador(String nome) {
         this.nome = nome;
-        this.vida = 100;
-        this.ataque = 10;
-        this.defesa = 5;
-        this.nivel = 1;
-        this.experiencia = 0;
-        this.quantidadePocoes = 2;
-        this.quantidadeBombas = 1;
-        this.quantidadeEscudos = 1;
-        this.escudoAtivo = false;
+        vida = 100;
+        ataque = 10;
+        defesa = 5;
+        nivel = 1;
+        experiencia = 0;
+        escudoAtivo = false;
+        inventario = new Inventario();
     }
 
     public void mostrarStatus() {
         System.out.println("=== STATUS DO JOGADOR ===");
-        System.out.println("Nome: " + this.nome);
-        System.out.println("Vida: " + this.vida);
-        System.out.println("Ataque: " + this.ataque);
-        System.out.println("Defesa: " + this.defesa);
-        System.out.println("Nível: " + this.nivel);
-        System.out.println("Experiência: " + this.experiencia);
-        System.out.println("Poções: " + this.quantidadePocoes);
-        System.out.println("Bombas: " + this.quantidadeBombas);
-        System.out.println("Escudos: " + this.quantidadeEscudos);
+        System.out.println("Nome: " + nome);
+        System.out.println("Vida: " + vida);
+        System.out.println("Ataque: " + ataque);
+        System.out.println("Defesa: " + defesa);
+        System.out.println("Nível: " + nivel);
+        System.out.println("Experiência: " + experiencia);
+        System.out.println("Poções: " + inventario.quantidadePocoes);
+        System.out.println("Bombas: " + inventario.quantidadeBombas);
+        System.out.println("Escudos: " + inventario.quantidadeEscudos);
     }
 
     public void ganharExperiencia(int quantidade) {
-        this.experiencia = this.experiencia + quantidade;
-        System.out.println(this.nome + " ganhou " + quantidade + " de experiência!");
+        experiencia = experiencia + quantidade;
+        System.out.println(nome + " ganhou " + quantidade + " de experiência!");
 
-        if (this.experiencia >= 20) {
-            this.subirNivel();
+        if (experiencia >= 20) {
+            subirNivel();
         }
     }
 
     public void subirNivel() {
-        this.nivel = this.nivel + 1;
-        this.experiencia = this.experiencia - 20;
-        this.vida = 100;
-        this.ataque = this.ataque + 2;
-        this.defesa = this.defesa + 1;
+        nivel = nivel + 1;
+        experiencia = experiencia - 20;
+        vida = 100;
+        ataque = ataque + 2;
+        defesa = defesa + 1;
 
-        System.out.println(this.nome + " subiu para o nível " + this.nivel + "!");
+        System.out.println(nome + " subiu para o nível " + nivel + "!");
         System.out.println("Os atributos foram aumentados.");
     }
 }

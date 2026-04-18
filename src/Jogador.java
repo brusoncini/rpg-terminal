@@ -6,6 +6,7 @@ public class Jogador {
     int nivel;
     int experiencia;
     int quantidadePocoes;
+    int quantidadeBombas;
 
     public Jogador(String nome) {
         this.nome = nome;
@@ -24,6 +25,8 @@ public class Jogador {
         System.out.println("Defesa: " + this.defesa);
         System.out.println("Nível: " + this.nivel);
         System.out.println("Experiência: " + this.experiencia);
+        System.out.println("Poções: " + this.quantidadePocoes);
+        System.out.println("Bombas: " + this.quantidadeBombas);
     }
 
     public void ganharExperiencia(int quantidade) {

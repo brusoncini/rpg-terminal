@@ -144,6 +144,7 @@ public class Jogo {
 
         if (inimigo.vida <= 0) {
             System.out.println(this.jogador.nome + " venceu a batalha!");
+            this.jogador.ganharExperiencia(10);
         } else {
             this.ataqueDoInimigo(inimigo);
         }

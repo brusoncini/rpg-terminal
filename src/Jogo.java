@@ -4,21 +4,35 @@ import java.util.Scanner;
 public class Jogo {
     Scanner leitor;
     boolean jogoRodando;
+    boolean jogoVencido;
     Jogador jogador;
     Random aleatorio;
+
 
     public Jogo() {
         leitor = new Scanner(System.in);
         jogoRodando = true;
+        jogoVencido = false;
         jogador = null;
         aleatorio = new Random();
+    }
+
+    public int lerOpcao() {
+        while (!leitor.hasNextInt()) {
+            System.out.println("Digite apenas números.");
+            leitor.nextLine();
+            System.out.print("Escolha: ");
+        }
+
+        int opcao = leitor.nextInt();
+        leitor.nextLine();
+        return opcao;
     }
 
     public void iniciar() {
         while (jogoRodando) {
             mostrarMenu();
-            int opcao = leitor.nextInt();
-            leitor.nextLine();
+            int opcao = lerOpcao();
 
             switch (opcao) {
                 case 0:
@@ -43,6 +57,12 @@ public class Jogo {
             }
 
             System.out.println();
+        }
+
+        if (jogoVencido) {
+            System.out.println();
+            System.out.println("=== FIM DE JOGO ===");
+            System.out.println("Você derrotou o chefão e venceu!");
         }
     }
 
@@ -132,8 +152,7 @@ public class Jogo {
             System.out.println("3 - Usar item");
             System.out.print("Escolha: ");
 
-            int opcaoCombate = leitor.nextInt();
-            leitor.nextLine();
+            int opcaoCombate = lerOpcao();
 
             if (opcaoCombate == 1) {
                 atacarInimigo(inimigo);
@@ -168,7 +187,10 @@ public class Jogo {
 
             if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
                 System.out.println("O chefão foi derrotado!");
+                System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
                 jogador.ganharExperiencia(30);
+                jogoVencido = true;
+                jogoRodando = false;
             } else {
                 jogador.ganharExperiencia(10);
             }
@@ -232,8 +254,7 @@ public class Jogo {
         System.out.println("0 - Voltar");
         System.out.print("Escolha: ");
 
-        int opcaoItem = leitor.nextInt();
-        leitor.nextLine();
+        int opcaoItem = lerOpcao();
 
         if (opcaoItem == 1) {
             usarPocao(inimigo);
@@ -306,7 +327,10 @@ public class Jogo {
 
             if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
                 System.out.println("O chefão foi derrotado!");
+                System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
                 jogador.ganharExperiencia(30);
+                jogoVencido = true;
+                jogoRodando = false;
             } else {
                 jogador.ganharExperiencia(10);
             }

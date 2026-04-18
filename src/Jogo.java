@@ -156,7 +156,14 @@ public class Jogo {
 
         if (inimigo.vida <= 0) {
             System.out.println(this.jogador.nome + " venceu a batalha!");
-            this.jogador.ganharExperiencia(10);
+
+            if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
+                System.out.println("O chefão foi derrotado!");
+                this.jogador.ganharExperiencia(30);
+            } else {
+                this.jogador.ganharExperiencia(10);
+            }
+
         } else {
             this.ataqueDoInimigo(inimigo);
         }
@@ -205,15 +212,15 @@ public class Jogo {
         int tipoInimigo = this.aleatorio.nextInt(3);
 
         if (tipoInimigo == 0) {
-            return new Inimigo("Goblin", 30, 8);
+            return new Inimigo("Goblin", RaridadeDoInimigo.COMUM, 30, 8);
         } else if (tipoInimigo == 1) {
-            return new Inimigo("Lobo", 40, 6);
+            return new Inimigo("Lobo",  RaridadeDoInimigo.COMUM, 40, 6);
         } else {
-            return new Inimigo("Esqueleto", 25, 10);
+            return new Inimigo("Esqueleto",  RaridadeDoInimigo.COMUM, 25, 10);
         }
     }
 
     public Inimigo criarChefe() {
-        return new Inimigo("Dragão", 80, 15);
+        return new Inimigo("Dragão",  RaridadeDoInimigo.CHEFE,80, 15);
     }
 }

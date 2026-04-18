@@ -5,13 +5,14 @@ public class Jogador {
     int defesa;
     int nivel;
     int experiencia;
+    int quantidadePocoes;
 
     public Jogador(String nome) {
         this.nome = nome;
         this.vida = 100;
         this.ataque = 10;
         this.defesa = 5;
-        this.nivel = 3;
+        this.nivel = 1;
         this.experiencia = 0;
     }
 

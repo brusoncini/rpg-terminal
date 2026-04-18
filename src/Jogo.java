@@ -124,6 +124,7 @@ public class Jogo {
             System.out.println(inimigo.nome + " - Vida: " + inimigo.vida);
             System.out.println("1 - Atacar");
             System.out.println("2 - Fugir");
+            System.out.println("3 - Usar poção");
             System.out.print("Escolha: ");
 
             int opcaoCombate = this.leitor.nextInt();
@@ -137,6 +138,9 @@ public class Jogo {
                 if (fugiu) {
                     return;
                 }
+
+            } else if (opcaoCombate == 3) {
+                this.usarPocao(inimigo);
 
             } else {
                 System.out.println("Opção inválida no combate.");
@@ -208,19 +212,49 @@ public class Jogo {
         }
     }
 
+    public void usarPocao(Inimigo inimigo) {
+        if (this.jogador.quantidadePocoes <= 0) {
+            System.out.println(this.jogador.nome + " não tem poções.");
+            return;
+        }
+
+        if (this.jogador.vida == 100) {
+            System.out.println(this.jogador.nome + " já está com a vida cheia.");
+            return;
+        }
+
+        this.jogador.quantidadePocoes = this.jogador.quantidadePocoes - 1;
+        this.jogador.vida = this.jogador.vida + 20;
+
+        if (this.jogador.vida > 100) {
+            this.jogador.vida = 100;
+        }
+
+        System.out.println(this.jogador.nome + " usou uma poção!");
+        System.out.println("A vida de " + this.jogador.nome + " foi recuperada.");
+        System.out.println("Vida atual: " + this.jogador.vida);
+        System.out.println("Poções restantes: " + this.jogador.quantidadePocoes);
+
+        if (inimigo.vida > 0) {
+            System.out.println("Enquanto " + this.jogador.nome + " usava a poção, o " + inimigo.nome + " atacou!");
+            this.ataqueDoInimigo(inimigo);
+        }
+    }
+
     public Inimigo criarInimigoAleatorio() {
         int tipoInimigo = this.aleatorio.nextInt(3);
 
         if (tipoInimigo == 0) {
             return new Inimigo("Goblin", RaridadeDoInimigo.COMUM, 30, 8);
         } else if (tipoInimigo == 1) {
-            return new Inimigo("Lobo",  RaridadeDoInimigo.COMUM, 40, 6);
+            return new Inimigo("Lobo", RaridadeDoInimigo.COMUM, 40, 6);
         } else {
-            return new Inimigo("Esqueleto",  RaridadeDoInimigo.COMUM, 25, 10);
+            return new Inimigo("Esqueleto", RaridadeDoInimigo.COMUM, 25, 10);
         }
     }
 
     public Inimigo criarChefe() {
-        return new Inimigo("Dragão",  RaridadeDoInimigo.CHEFE,80, 15);
+        return new Inimigo("Dragão", RaridadeDoInimigo.CHEFE, 80, 15);
     }
+
 }

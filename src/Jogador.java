@@ -7,6 +7,8 @@ public class Jogador {
     int experiencia;
     int quantidadePocoes;
     int quantidadeBombas;
+    int quantidadeEscudos;
+    boolean escudoAtivo;
 
     public Jogador(String nome) {
         this.nome = nome;
@@ -15,6 +17,10 @@ public class Jogador {
         this.defesa = 5;
         this.nivel = 1;
         this.experiencia = 0;
+        this.quantidadePocoes = 2;
+        this.quantidadeBombas = 1;
+        this.quantidadeEscudos = 1;
+        this.escudoAtivo = false;
     }
 
     public void mostrarStatus() {
@@ -27,6 +33,7 @@ public class Jogador {
         System.out.println("Experiência: " + this.experiencia);
         System.out.println("Poções: " + this.quantidadePocoes);
         System.out.println("Bombas: " + this.quantidadeBombas);
+        System.out.println("Escudos: " + this.quantidadeEscudos);
     }
 
     public void ganharExperiencia(int quantidade) {

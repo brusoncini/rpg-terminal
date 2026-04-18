@@ -80,7 +80,7 @@ public class Jogo {
         }
 
         System.out.println(this.jogador.nome + " saiu para explorar...");
-        int evento = this.aleatorio.nextInt(4);
+        int evento = this.aleatorio.nextInt(5);
 
         if (evento == 0) {
             if (this.jogador.nivel >= 3) {
@@ -108,6 +108,11 @@ public class Jogo {
             System.out.println(this.jogador.nome + " encontrou uma bomba!");
             this.jogador.quantidadeBombas = this.jogador.quantidadeBombas + 1;
             System.out.println("Agora " + this.jogador.nome + " tem " + this.jogador.quantidadeBombas + " bomba(s).");
+
+        } else if (evento == 3) {
+            System.out.println(this.jogador.nome + " encontrou um escudo!");
+            this.jogador.quantidadeEscudos = this.jogador.quantidadeEscudos + 1;
+            System.out.println("Agora " + this.jogador.nome + " tem " + this.jogador.quantidadeEscudos + " escudo(s).");
 
         } else {
             System.out.println(this.jogador.nome + " andou bastante, mas não encontrou nada.");
@@ -176,6 +181,12 @@ public class Jogo {
     public void ataqueDoInimigo(Inimigo inimigo) {
         int danoRecebido = inimigo.ataque - this.jogador.defesa;
 
+        if (this.jogador.escudoAtivo) {
+            danoRecebido = danoRecebido - 5;
+            System.out.println("O escudo de " + this.jogador.nome + " reduziu ainda mais o dano!");
+            this.jogador.escudoAtivo = false;
+        }
+
         if (danoRecebido < 0) {
             danoRecebido = 0;
         }
@@ -215,8 +226,9 @@ public class Jogo {
     public void abrirMenuDeItens(Inimigo inimigo) {
         System.out.println();
         System.out.println("=== ITENS ===");
-        System.out.println("1 - Poção");
-        System.out.println("2 - Bomba");
+        System.out.println("1 - Poção (" + this.jogador.quantidadePocoes + ")");
+        System.out.println("2 - Bomba (" + this.jogador.quantidadeBombas + ")");
+        System.out.println("3 - Escudo (" + this.jogador.quantidadeEscudos + ")");
         System.out.println("0 - Voltar");
         System.out.print("Escolha: ");
 
@@ -228,6 +240,9 @@ public class Jogo {
 
         } else if (opcaoItem == 2) {
             this.usarBomba(inimigo);
+
+        } else if (opcaoItem == 3) {
+            this.usarEscudo(inimigo);
 
         } else if (opcaoItem == 0) {
             System.out.println("Voltando ao combate...");
@@ -298,6 +313,30 @@ public class Jogo {
 
         } else {
             System.out.println("O " + inimigo.nome + " sobreviveu e contra-atacou!");
+            this.ataqueDoInimigo(inimigo);
+        }
+    }
+
+    public void usarEscudo(Inimigo inimigo) {
+        if (this.jogador.quantidadeEscudos <= 0) {
+            System.out.println(this.jogador.nome + " não tem escudos.");
+            return;
+        }
+
+        if (this.jogador.escudoAtivo) {
+            System.out.println(this.jogador.nome + " já está com um escudo ativo.");
+            return;
+        }
+
+        this.jogador.quantidadeEscudos = this.jogador.quantidadeEscudos - 1;
+        this.jogador.escudoAtivo = true;
+
+        System.out.println(this.jogador.nome + " usou um escudo!");
+        System.out.println("O próximo ataque recebido será reduzido.");
+        System.out.println("Escudos restantes: " + this.jogador.quantidadeEscudos);
+
+        if (inimigo.vida > 0) {
+            System.out.println("O " + inimigo.nome + " atacou mesmo assim!");
             this.ataqueDoInimigo(inimigo);
         }
     }

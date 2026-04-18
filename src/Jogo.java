@@ -150,13 +150,22 @@ public class Jogo {
     }
 
     public void ataqueDoInimigo(Inimigo inimigo) {
+        int danoRecebido = inimigo.ataque - this.jogador.defesa;
+
+        if (danoRecebido < 0) {
+            danoRecebido = 0;
+        }
+
         System.out.println("O " + inimigo.nome + " atacou " + this.jogador.nome + "!");
-        this.jogador.vida = this.jogador.vida - inimigo.ataque;
+        System.out.println("A defesa de " + this.jogador.nome + " reduziu o dano.");
+
+        this.jogador.vida = this.jogador.vida - danoRecebido;
 
         if (this.jogador.vida < 0) {
             this.jogador.vida = 0;
         }
 
+        System.out.println(this.jogador.nome + " recebeu " + danoRecebido + " de dano.");
         System.out.println(this.jogador.nome + " ficou com " + this.jogador.vida + " de vida.");
 
         if (this.jogador.vida <= 0) {

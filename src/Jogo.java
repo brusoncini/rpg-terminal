@@ -124,8 +124,7 @@ public class Jogo {
             System.out.println(inimigo.nome + " - Vida: " + inimigo.vida);
             System.out.println("1 - Atacar");
             System.out.println("2 - Fugir");
-            System.out.println("3 - Usar poção");
-            System.out.println("4 - Usar bomba");
+            System.out.println("3 - Usar item");
             System.out.print("Escolha: ");
 
             int opcaoCombate = this.leitor.nextInt();
@@ -141,10 +140,7 @@ public class Jogo {
                 }
 
             } else if (opcaoCombate == 3) {
-                this.usarPocao(inimigo);
-
-            } else if (opcaoCombate == 4) {
-                this.usarBomba(inimigo);
+                this.abrirMenuDeItens(inimigo);
 
             } else {
                 System.out.println("Opção inválida no combate.");
@@ -213,6 +209,31 @@ public class Jogo {
             System.out.println("O " + inimigo.nome + " aproveitou para atacar!");
             this.ataqueDoInimigo(inimigo);
             return false;
+        }
+    }
+
+    public void abrirMenuDeItens(Inimigo inimigo) {
+        System.out.println();
+        System.out.println("=== ITENS ===");
+        System.out.println("1 - Poção");
+        System.out.println("2 - Bomba");
+        System.out.println("0 - Voltar");
+        System.out.print("Escolha: ");
+
+        int opcaoItem = this.leitor.nextInt();
+        this.leitor.nextLine();
+
+        if (opcaoItem == 1) {
+            this.usarPocao(inimigo);
+
+        } else if (opcaoItem == 2) {
+            this.usarBomba(inimigo);
+
+        } else if (opcaoItem == 0) {
+            System.out.println("Voltando ao combate...");
+
+        } else {
+            System.out.println("Opção inválida no menu de itens.");
         }
     }
 

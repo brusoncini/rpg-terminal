@@ -83,7 +83,19 @@ public class Jogo {
         int evento = this.aleatorio.nextInt(3);
 
         if (evento == 0) {
-            Inimigo inimigo = new Inimigo("Goblin", 30, 8);
+            if (this.jogador.nivel >= 3) {
+                int sorteioChefe = this.aleatorio.nextInt(4);
+
+                if (sorteioChefe == 0) {
+                    Inimigo chefe = this.criarChefe();
+                    System.out.println("O CHEFÃO apareceu!");
+                    System.out.println("Um " + chefe.nome + " surgiu diante de " + this.jogador.nome + "!");
+                    this.lutar(chefe);
+                    return;
+                }
+            }
+
+            Inimigo inimigo = this.criarInimigoAleatorio();
             System.out.println("Um " + inimigo.nome + " apareceu no caminho!");
             this.lutar(inimigo);
 
@@ -187,5 +199,21 @@ public class Jogo {
             this.ataqueDoInimigo(inimigo);
             return false;
         }
+    }
+
+    public Inimigo criarInimigoAleatorio() {
+        int tipoInimigo = this.aleatorio.nextInt(3);
+
+        if (tipoInimigo == 0) {
+            return new Inimigo("Goblin", 30, 8);
+        } else if (tipoInimigo == 1) {
+            return new Inimigo("Lobo", 40, 6);
+        } else {
+            return new Inimigo("Esqueleto", 25, 10);
+        }
+    }
+
+    public Inimigo criarChefe() {
+        return new Inimigo("Dragão", 80, 15);
     }
 }

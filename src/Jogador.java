@@ -11,7 +11,7 @@ public class Jogador {
         this.vida = 100;
         this.ataque = 10;
         this.defesa = 5;
-        this.nivel = 1;
+        this.nivel = 3;
         this.experiencia = 0;
     }
 

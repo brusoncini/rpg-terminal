@@ -107,23 +107,75 @@ public class Jogo {
 
         while (this.jogador.vida > 0 && inimigo.vida > 0) {
             System.out.println();
-            System.out.println(this.jogador.nome + " ataca o " + inimigo.nome + "!");
-            inimigo.vida = inimigo.vida - this.jogador.ataque;
-            System.out.println("O " + inimigo.nome + " ficou com " + inimigo.vida + " de vida.");
+            System.out.println("=== COMBATE ===");
+            System.out.println(this.jogador.nome + " - Vida: " + this.jogador.vida);
+            System.out.println(inimigo.nome + " - Vida: " + inimigo.vida);
+            System.out.println("1 - Atacar");
+            System.out.println("2 - Fugir");
+            System.out.print("Escolha: ");
 
-            if (inimigo.vida <= 0) {
-                System.out.println(this.jogador.nome + " venceu a batalha!");
-                break;
+            int opcaoCombate = this.leitor.nextInt();
+            this.leitor.nextLine();
+
+            if (opcaoCombate == 1) {
+                this.atacarInimigo(inimigo);
+
+            } else if (opcaoCombate == 2) {
+                boolean fugiu = this.tentarFugir(inimigo);
+                if (fugiu) {
+                    return;
+                }
+
+            } else {
+                System.out.println("Opção inválida no combate.");
             }
+        }
+    }
 
-            System.out.println("O " + inimigo.nome + " atacou " + this.jogador.nome + "!");
-            this.jogador.vida = this.jogador.vida - inimigo.ataque;
-            System.out.println(this.jogador.nome + " ficou com " + this.jogador.vida + " de vida.");
+    public void atacarInimigo(Inimigo inimigo) {
+        System.out.println(this.jogador.nome + " atacou o " + inimigo.nome + "!");
+        inimigo.vida = inimigo.vida - this.jogador.ataque;
 
-            if (this.jogador.vida <= 0) {
-                System.out.println(this.jogador.nome + " foi derrotado.");
-                this.jogoRodando = false;
-            }
+        if (inimigo.vida < 0) {
+            inimigo.vida = 0;
+        }
+
+        System.out.println("O " + inimigo.nome + " ficou com " + inimigo.vida + " de vida.");
+
+        if (inimigo.vida <= 0) {
+            System.out.println(this.jogador.nome + " venceu a batalha!");
+        } else {
+            this.ataqueDoInimigo(inimigo);
+        }
+    }
+
+    public void ataqueDoInimigo(Inimigo inimigo) {
+        System.out.println("O " + inimigo.nome + " atacou " + this.jogador.nome + "!");
+        this.jogador.vida = this.jogador.vida - inimigo.ataque;
+
+        if (this.jogador.vida < 0) {
+            this.jogador.vida = 0;
+        }
+
+        System.out.println(this.jogador.nome + " ficou com " + this.jogador.vida + " de vida.");
+
+        if (this.jogador.vida <= 0) {
+            System.out.println(this.jogador.nome + " foi derrotado.");
+            this.jogoRodando = false;
+        }
+    }
+
+    public boolean tentarFugir(Inimigo inimigo) {
+        int fuga = this.aleatorio.nextInt(2);
+
+        if (fuga == 0) {
+            System.out.println(this.jogador.nome + " conseguiu fugir da batalha!");
+            return true;
+        } else {
+            System.out.println(this.jogador.nome + " tentou fugir, mas não conseguiu!");
+            System.out.println("O " + inimigo.nome + " aproveitou para atacar!");
+            this.ataqueDoInimigo(inimigo);
+            return false;
         }
     }
 }

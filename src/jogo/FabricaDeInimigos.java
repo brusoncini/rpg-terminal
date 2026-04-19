@@ -13,9 +13,9 @@ public class FabricaDeInimigos {
         int tipoInimigo = aleatorio.nextInt(3);
 
         if (tipoInimigo == 0) {
-            return new Inimigo("Goblin", RaridadeDoInimigo.COMUM, 30, 8);
+            return new Inimigo("Goblin", RaridadeDoInimigo.COMUM, 30, 9);
         } else if (tipoInimigo == 1) {
-            return new Inimigo("Lobo", RaridadeDoInimigo.COMUM, 40, 6);
+            return new Inimigo("Lobo", RaridadeDoInimigo.COMUM, 40, 11);
         } else {
             return new Inimigo("Esqueleto", RaridadeDoInimigo.COMUM, 25, 10);
         }

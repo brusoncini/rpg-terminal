@@ -18,7 +18,7 @@ public class Jogador {
         vidaMaxima = 100;
         ataque = 10;
         defesa = 5;
-        nivel = 1;
+        nivel = 6;
         experiencia = 0;
         ouro = 0;
         escudoAtivo = false;
@@ -159,6 +159,7 @@ public class Jogador {
         sb.append("Vida: ").append(vida).append("/").append(vidaMaxima).append("\n");
         sb.append("Ataque: ").append(ataque).append("\n");
         sb.append("Defesa: ").append(defesa).append("\n");
+        sb.append("Ouro: ").append(ouro).append("\n");
         sb.append("Nível: ").append(nivel).append("\n");
         sb.append("Experiência: ").append(experiencia).append("/20");
 

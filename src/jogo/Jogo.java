@@ -54,12 +54,6 @@ public class Jogo {
         }
     }
 
-    public void mostrarRecompensas(int experiencia, int ouro) {
-        mostrarTitulo("=== RECOMPENSAS ===");
-        System.out.println("Experiência ganha: " + experiencia);
-        System.out.println("Ouro ganho: " + ouro);
-    }
-
     public void iniciar() {
         while (jogoRodando) {
             mostrarMenu();
@@ -232,11 +226,11 @@ public class Jogo {
         // Cura 10% da vida do jogador
         int cura = jogador.getVidaMaxima() / 10;
 
+        jogador.curar(cura);
+
         if (jogador.getVida() > jogador.getVidaMaxima()) {
             jogador.setVida(jogador.getVidaMaxima());
         }
-
-        jogador.curar(cura);
 
         System.out.println(jogador.getNome() + " encontrou uma fonte mágica de cura!");
         System.out.println(jogador.getNome() + " recuperou " + cura + " de vida.");

@@ -44,4 +44,16 @@ public class Inventario {
     public void usarEscudo() {
         this.quantidadeEscudos = this.quantidadeEscudos - 1;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nInventário:\n");
+        sb.append("Poções: ").append(quantidadePocoes).append("\n");
+        sb.append("Bombas: ").append(quantidadeBombas).append("\n");
+        sb.append("Escudos: ").append(quantidadeEscudos).append("\n");
+
+        return sb.toString();
+    }
 }

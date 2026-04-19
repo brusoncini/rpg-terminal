@@ -52,6 +52,10 @@ public class Jogo {
                     explorar();
                     break;
 
+                case 4:
+                    abrirLoja();
+                    break;
+
                 default:
                     System.out.println("Opção inválida.");
             }
@@ -71,6 +75,7 @@ public class Jogo {
         System.out.println("1 - Novo jogo");
         System.out.println("2 - Ver status");
         System.out.println("3 - Explorar");
+        System.out.println("4 - Loja");
         System.out.println("0 - Sair");
         System.out.print("Escolha: ");
     }
@@ -100,10 +105,11 @@ public class Jogo {
         }
 
         System.out.println(jogador.nome + " saiu para explorar...");
-        int evento = aleatorio.nextInt(4);
+        int evento = aleatorio.nextInt(5);
 
         if (evento == 0) {
-            if (jogador.nivel >= 3) {
+
+            if (jogador.nivel >= 5) {
                 int sorteioChefe = aleatorio.nextInt(4);
 
                 if (sorteioChefe == 0) {
@@ -111,6 +117,18 @@ public class Jogo {
                     System.out.println("O CHEFÃO apareceu!");
                     System.out.println("Um " + chefe.nome + " surgiu diante de " + jogador.nome + "!");
                     lutar(chefe);
+                    return;
+                }
+            }
+
+            if (jogador.nivel >= 3) {
+                int sorteioElite = aleatorio.nextInt(3);
+
+                if (sorteioElite == 0) {
+                    Inimigo elite = criarElite();
+                    System.out.println("Um inimigo de ELITE apareceu!");
+                    System.out.println("Um " + elite.nome + " surgiu diante de " + jogador.nome + "!");
+                    lutar(elite);
                     return;
                 }
             }
@@ -125,6 +143,9 @@ public class Jogo {
 
         } else if (evento == 2) {
             cairEmArmadilha();
+
+        } else if (evento == 3) {
+            encontrarOuro();
 
         } else {
             System.out.println(jogador.nome + " andou bastante, mas não encontrou nada.");
@@ -203,6 +224,100 @@ public class Jogo {
         }
     }
 
+    public void encontrarOuro() {
+        int quantidadeDeOuro = aleatorio.nextInt(16) + 5;
+
+        jogador.ouro = jogador.ouro + quantidadeDeOuro;
+
+        System.out.println(jogador.nome + " encontrou " + quantidadeDeOuro + " moedas de ouro!");
+        System.out.println("Agora " + jogador.nome + " tem " + jogador.ouro + " de ouro.");
+    }
+
+    public void abrirLoja() {
+        if (jogador == null) {
+            System.out.println("Crie um personagem antes de entrar na loja.");
+            return;
+        }
+
+        boolean lojaAberta = true;
+
+        while (lojaAberta) {
+            System.out.println();
+            System.out.println("=== LOJA ===");
+            System.out.println("Ouro atual: " + jogador.ouro);
+            System.out.println("1 - Comprar poção (10 ouro)");
+            System.out.println("2 - Comprar bomba (15 ouro)");
+            System.out.println("3 - Comprar escudo (20 ouro)");
+            System.out.println("0 - Sair da loja");
+            System.out.print("Escolha: ");
+
+            int opcaoLoja = lerOpcao();
+
+            if (opcaoLoja == 1) {
+                comprarPocao();
+
+            } else if (opcaoLoja == 2) {
+                comprarBomba();
+
+            } else if (opcaoLoja == 3) {
+                comprarEscudo();
+
+            } else if (opcaoLoja == 0) {
+                System.out.println("Saindo da loja...");
+                lojaAberta = false;
+
+            } else {
+                System.out.println("Opção inválida na loja.");
+            }
+        }
+    }
+
+    public void comprarPocao() {
+        int preco = 10;
+
+        if (jogador.ouro < preco) {
+            System.out.println("Ouro insuficiente para comprar poção.");
+            return;
+        }
+
+        jogador.ouro = jogador.ouro - preco;
+        jogador.inventario.adicionarPocao();
+
+        System.out.println(jogador.nome + " comprou uma poção!");
+        System.out.println("Ouro restante: " + jogador.ouro);
+    }
+
+    public void comprarBomba() {
+        int preco = 15;
+
+        if (jogador.ouro < preco) {
+            System.out.println("Ouro insuficiente para comprar bomba.");
+            return;
+        }
+
+        jogador.ouro = jogador.ouro - preco;
+        jogador.inventario.adicionarBomba();
+
+        System.out.println(jogador.nome + " comprou uma bomba!");
+        System.out.println("Ouro restante: " + jogador.ouro);
+    }
+
+    public void comprarEscudo() {
+        int preco = 20;
+
+        if (jogador.ouro < preco) {
+            System.out.println("Ouro insuficiente para comprar escudo.");
+            return;
+        }
+
+        jogador.ouro = jogador.ouro - preco;
+        jogador.inventario.adicionarEscudo();
+
+        System.out.println(jogador.nome + " comprou um escudo!");
+        System.out.println("Ouro restante: " + jogador.ouro);
+    }
+
+
     public void atacarInimigo(Inimigo inimigo) {
         System.out.println(jogador.nome + " atacou o " + inimigo.nome + "!");
         inimigo.vida = inimigo.vida - jogador.ataque;
@@ -219,11 +334,17 @@ public class Jogo {
             if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
                 System.out.println("O chefão foi derrotado!");
                 System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
-                jogador.ganharExperiencia(30);
                 jogoVencido = true;
                 jogoRodando = false;
+
+            } else if (inimigo.raridade == RaridadeDoInimigo.ELITE) {
+                System.out.println("Um inimigo de elite foi derrotado!");
+                jogador.ganharExperiencia(30);
+                jogador.ganharOuro(30);
+
             } else {
                 jogador.ganharExperiencia(10);
+                jogador.ganharOuro(10);
             }
 
         } else {
@@ -318,8 +439,8 @@ public class Jogo {
         jogador.inventario.usarPocao();
         jogador.vida = jogador.vida + 20;
 
-        if (jogador.vida > 100) {
-            jogador.vida = 100;
+        if (jogador.vida > jogador.vidaMaxima) {
+            jogador.vida = jogador.vidaMaxima;
         }
 
         System.out.println(jogador.nome + " usou uma poção!");
@@ -359,11 +480,16 @@ public class Jogo {
             if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
                 System.out.println("O chefão foi derrotado!");
                 System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
-                jogador.ganharExperiencia(30);
                 jogoVencido = true;
                 jogoRodando = false;
+            } else if (inimigo.raridade == RaridadeDoInimigo.ELITE) {
+                System.out.println("O inimigo de Elite foi derrotado!");
+                jogador.ganharExperiencia(30);
+                jogador.ganharOuro(30);
+
             } else {
                 jogador.ganharExperiencia(10);
+                jogador.ganharOuro(10);
             }
 
         } else {
@@ -408,7 +534,16 @@ public class Jogo {
         }
     }
 
+    public Inimigo criarElite() {
+        int tipoInimigo = aleatorio.nextInt(2);
+        if (tipoInimigo == 0) {
+            return new Inimigo("Capitão Orc", RaridadeDoInimigo.ELITE, 80, 15);
+        } else {
+            return new Inimigo("Cavaleiro Sombrio", RaridadeDoInimigo.ELITE, 80, 15);
+        }
+    }
+
     public Inimigo criarChefe() {
-        return new Inimigo("Dragão", RaridadeDoInimigo.CHEFE, 80, 15);
+        return new Inimigo("Rei Dragão", RaridadeDoInimigo.CHEFE, 95, 20);
     }
 }

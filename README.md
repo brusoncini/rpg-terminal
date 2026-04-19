@@ -8,14 +8,12 @@
 Projeto desenvolvido em **Java**, utilizando princípios de **programação orientada a objetos**.  
 O jogo acontece no terminal e permite criar um personagem, explorar o mapa, enfrentar inimigos comuns, elites e um chefe final, além de usar itens, ganhar ouro e evoluir de nível.
 
----
 
 ## 🎯 Objetivo
 
 O objetivo do programa é simular um RPG em terminal com exploração, combate e progressão de personagem.  
 Durante a partida, o jogador pode encontrar eventos aleatórios, coletar itens e ouro, lutar contra inimigos e tentar derrotar o chefe final para vencer o jogo.
 
----
 
 ## 🛠️ Funcionalidades e implementação
 
@@ -32,7 +30,6 @@ Durante a partida, o jogador pode encontrar eventos aleatórios, coletar itens e
 - Golpe especial do chefe final
 - Organização do código em pacotes utilizando POO
 
----
 
 ## 🗂️ Organização do projeto
 
@@ -61,7 +58,6 @@ Contém serviços responsáveis por partes específicas do sistema:
 ### Classe principal
 - `Main`: inicia a execução do programa.
 
----
 
 ## Estrutura orientada a objetos
 
@@ -73,7 +69,6 @@ A organização do projeto foi pensada para aplicar conceitos de orientação a 
 - uso de serviços para centralizar regras específicas, como combate e loja
 - uso de enum para classificar tipos de inimigo
 
----
 
 ## ⚔️ Sistema de combate
 
@@ -87,7 +82,6 @@ O jogador pode escolher entre:
 Os inimigos atacam após a ação do jogador, exceto quando são derrotados.  
 O chefe final possui uma chance de usar um ataque especial chamado **Golpe Devastador**, que causa dano extra.
 
----
 
 ## 📈 Sistema de progressão
 
@@ -104,7 +98,6 @@ Ao acumular experiência suficiente, o jogador sobe de nível e recebe melhorias
 - aumento de defesa
 - recuperação total de vida ao subir de nível
 
----
 
 ## 📦 Itens
 
@@ -117,7 +110,6 @@ Causa dano direto ao inimigo durante o combate.
 ### Escudo
 Ativa uma proteção temporária que reduz o próximo ataque recebido.
 
----
 
 ## 💻 Como executar
 
@@ -135,7 +127,6 @@ java -cp out Main
 ```
 3. Use as opções do menu para jogar
 
----
 
 ## 🎮 Fluxo básico do jogo
 
@@ -150,7 +141,6 @@ O programa permite:
 - evoluir de nível
 - derrotar o chefe final
 
----
 
 ## ✍️ Observações
 
@@ -158,13 +148,12 @@ O programa permite:
 - O chefe final só pode aparecer quando o jogador atinge o nível necessário.
 - O sistema foi desenvolvido com foco em prática de orientação a objetos e organização de código.
 
----
 
 ## ☕ Linguagem utilizada
 
 - Java
 
---- 
+
 ## 👩🏻‍💻 Feito por
 
 Desenvolvido com ❤️ por [Bruna Soncini](www.linkedin.com/in/brunasoncini/).

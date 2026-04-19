@@ -100,7 +100,7 @@ public class Jogo {
         }
 
         System.out.println(jogador.nome + " saiu para explorar...");
-        int evento = aleatorio.nextInt(5);
+        int evento = aleatorio.nextInt(4);
 
         if (evento == 0) {
             if (jogador.nivel >= 3) {
@@ -120,19 +120,11 @@ public class Jogo {
             lutar(inimigo);
 
         } else if (evento == 1) {
-            System.out.println(jogador.nome + " encontrou uma poção!");
-            jogador.inventario.adicionarPocao();
-            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadePocoes + " poção(ões).");
+            System.out.println(jogador.nome + " encontrou um baú misterioso!");
+            abrirBau();
 
         } else if (evento == 2) {
-            System.out.println(jogador.nome + " encontrou uma bomba!");
-            jogador.inventario.adicionarBomba();
-            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadeBombas + " bomba(s).");
-
-        } else if (evento == 3) {
-            System.out.println(jogador.nome + " encontrou um escudo!");
-            jogador.inventario.adicionarEscudo();
-            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadeEscudos + " escudo(s).");
+            cairEmArmadilha();
 
         } else {
             System.out.println(jogador.nome + " andou bastante, mas não encontrou nada.");
@@ -169,6 +161,45 @@ public class Jogo {
             } else {
                 System.out.println("Opção inválida no combate.");
             }
+        }
+    }
+
+    public void cairEmArmadilha() {
+        int danoDaArmadilha = 10;
+
+        jogador.vida = jogador.vida - danoDaArmadilha;
+
+        if (jogador.vida < 0) {
+            jogador.vida = 0;
+        }
+
+        System.out.println(jogador.nome + " caiu em uma armadilha!");
+        System.out.println(jogador.nome + " recebeu " + danoDaArmadilha + " de dano.");
+        System.out.println("Vida atual: " + jogador.vida);
+
+        if (jogador.vida <= 0) {
+            System.out.println(jogador.nome + " não resistiu à armadilha.");
+            jogoRodando = false;
+        }
+    }
+
+    public void abrirBau() {
+        int itemDoBau = aleatorio.nextInt(3);
+
+        if (itemDoBau == 0) {
+            System.out.println(jogador.nome + " abriu o baú e encontrou uma poção!");
+            jogador.inventario.adicionarPocao();
+            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadePocoes + " poção(ões).");
+
+        } else if (itemDoBau == 1) {
+            System.out.println(jogador.nome + " abriu o baú e encontrou uma bomba!");
+            jogador.inventario.adicionarBomba();
+            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadeBombas + " bomba(s).");
+
+        } else {
+            System.out.println(jogador.nome + " abriu o baú e encontrou um escudo!");
+            jogador.inventario.adicionarEscudo();
+            System.out.println("Agora " + jogador.nome + " tem " + jogador.inventario.quantidadeEscudos + " escudo(s).");
         }
     }
 

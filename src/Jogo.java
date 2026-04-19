@@ -29,6 +29,54 @@ public class Jogo {
         return opcao;
     }
 
+    public void mostrarSeparador() {
+        System.out.println("==============================");
+    }
+
+    public void mostrarTitulo(String titulo) {
+        System.out.println();
+        mostrarSeparador();
+        System.out.println(titulo);
+        mostrarSeparador();
+    }
+
+    public void mostrarStatusRapido() {
+        if (jogador != null) {
+            System.out.println("Vida: " + jogador.vida + "/" + jogador.vidaMaxima
+                    + " | Ouro: " + jogador.ouro
+                    + " | XP: " + jogador.experiencia + "/20");
+        }
+    }
+
+    public void mostrarRecompensas(int experiencia, int ouro) {
+        mostrarTitulo("=== RECOMPENSAS ===");
+        System.out.println("Experiência ganha: " + experiencia);
+        System.out.println("Ouro ganho: " + ouro);
+    }
+
+    public void derrotarInimigo(Inimigo inimigo) {
+        mostrarTitulo("=== BATALHA ENCERRADA ===");
+        System.out.println(jogador.nome + " venceu a batalha!");
+
+        if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
+            System.out.println("O chefão foi derrotado!");
+            System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
+            jogoVencido = true;
+            jogoRodando = false;
+
+        } else if (inimigo.raridade == RaridadeDoInimigo.ELITE) {
+            System.out.println("Um inimigo de elite foi derrotado!");
+            jogador.ganharExperiencia(30);
+            jogador.ganharOuro(30);
+            mostrarRecompensas(30, 30);
+
+        } else {
+            jogador.ganharExperiencia(10);
+            jogador.ganharOuro(10);
+            mostrarRecompensas(10, 10);
+        }
+    }
+
     public void iniciar() {
         while (jogoRodando) {
             mostrarMenu();
@@ -64,14 +112,13 @@ public class Jogo {
         }
 
         if (jogoVencido) {
-            System.out.println();
-            System.out.println("=== FIM DE JOGO ===");
+            mostrarTitulo("=== VOCÊ VENCEU ===");
             System.out.println("Você derrotou o chefão e venceu!");
         }
     }
 
     public void mostrarMenu() {
-        System.out.println("=== RPG EM TERMINAL ===");
+        mostrarTitulo("=== RPG EM TERMINAL ===");
         System.out.println("1 - Novo jogo");
         System.out.println("2 - Ver status");
         System.out.println("3 - Explorar");
@@ -104,8 +151,11 @@ public class Jogo {
             return;
         }
 
+        mostrarTitulo("=== EXPLORAÇÃO ===");
+        mostrarStatusRapido();
         System.out.println(jogador.nome + " saiu para explorar...");
-        int evento = aleatorio.nextInt(5);
+
+        int evento = aleatorio.nextInt(6);
 
         if (evento == 0) {
 
@@ -145,6 +195,9 @@ public class Jogo {
             cairEmArmadilha();
 
         } else if (evento == 3) {
+            encontrarCuraPequena();
+
+        } else if (evento == 4) {
             encontrarOuro();
 
         } else {
@@ -153,12 +206,13 @@ public class Jogo {
     }
 
     public void lutar(Inimigo inimigo) {
+        mostrarTitulo("=== BATALHA ===");
         System.out.println("A batalha começou!");
 
         while (jogador.vida > 0 && inimigo.vida > 0) {
             System.out.println();
             System.out.println("=== COMBATE ===");
-            System.out.println(jogador.nome + " - Vida: " + jogador.vida);
+            System.out.println(jogador.nome + " - Vida: " + jogador.vida + "/" + jogador.vidaMaxima);
             System.out.println(inimigo.nome + " - Vida: " + inimigo.vida);
             System.out.println("1 - Atacar");
             System.out.println("2 - Fugir");
@@ -204,6 +258,24 @@ public class Jogo {
         }
     }
 
+    public void encontrarCuraPequena() {
+        if (jogador.vida == jogador.vidaMaxima) {
+            System.out.println(jogador.nome + " encontrou uma fonte mágica de cura, mas já estava com a vida cheia.");
+            return;
+        }
+
+        int cura = 15;
+        jogador.vida = jogador.vida + cura;
+
+        if (jogador.vida > jogador.vidaMaxima) {
+            jogador.vida = jogador.vidaMaxima;
+        }
+
+        System.out.println(jogador.nome + " encontrou uma fonte mágica de cura!");
+        System.out.println(jogador.nome + " recuperou " + cura + " de vida.");
+        System.out.println("Vida atual: " + jogador.vida + "/" + jogador.vidaMaxima);
+    }
+
     public void abrirBau() {
         int itemDoBau = aleatorio.nextInt(3);
 
@@ -227,7 +299,7 @@ public class Jogo {
     public void encontrarOuro() {
         int quantidadeDeOuro = aleatorio.nextInt(16) + 5;
 
-        jogador.ouro = jogador.ouro + quantidadeDeOuro;
+        jogador.ganharOuro(quantidadeDeOuro);
 
         System.out.println(jogador.nome + " encontrou " + quantidadeDeOuro + " moedas de ouro!");
         System.out.println("Agora " + jogador.nome + " tem " + jogador.ouro + " de ouro.");
@@ -242,8 +314,7 @@ public class Jogo {
         boolean lojaAberta = true;
 
         while (lojaAberta) {
-            System.out.println();
-            System.out.println("=== LOJA ===");
+            mostrarTitulo("=== LOJA ===");
             System.out.println("Ouro atual: " + jogador.ouro);
             System.out.println("1 - Comprar poção (10 ouro)");
             System.out.println("2 - Comprar bomba (15 ouro)");
@@ -329,24 +400,7 @@ public class Jogo {
         System.out.println("O " + inimigo.nome + " ficou com " + inimigo.vida + " de vida.");
 
         if (inimigo.vida <= 0) {
-            System.out.println(jogador.nome + " venceu a batalha!");
-
-            if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
-                System.out.println("O chefão foi derrotado!");
-                System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
-                jogoVencido = true;
-                jogoRodando = false;
-
-            } else if (inimigo.raridade == RaridadeDoInimigo.ELITE) {
-                System.out.println("Um inimigo de elite foi derrotado!");
-                jogador.ganharExperiencia(30);
-                jogador.ganharOuro(30);
-
-            } else {
-                jogador.ganharExperiencia(10);
-                jogador.ganharOuro(10);
-            }
-
+            derrotarInimigo(inimigo);
         } else {
             ataqueDoInimigo(inimigo);
         }
@@ -378,7 +432,9 @@ public class Jogo {
         System.out.println(jogador.nome + " ficou com " + jogador.vida + " de vida.");
 
         if (jogador.vida <= 0) {
+            mostrarTitulo("=== FIM DE JOGO ===");
             System.out.println(jogador.nome + " foi derrotado.");
+            System.out.println("Seu progresso terminou aqui.");
             jogoRodando = false;
         }
     }
@@ -431,7 +487,7 @@ public class Jogo {
             return;
         }
 
-        if (jogador.vida == 100) {
+        if (jogador.vida == jogador.vidaMaxima) {
             System.out.println(jogador.nome + " já está com a vida cheia.");
             return;
         }
@@ -445,7 +501,7 @@ public class Jogo {
 
         System.out.println(jogador.nome + " usou uma poção!");
         System.out.println("A vida de " + jogador.nome + " foi recuperada.");
-        System.out.println("Vida atual: " + jogador.vida);
+        System.out.println("Vida atual: " + jogador.vida + "/" + jogador.vidaMaxima);
         System.out.println("Poções restantes: " + jogador.inventario.quantidadePocoes);
 
         if (inimigo.vida > 0) {
@@ -475,28 +531,13 @@ public class Jogo {
         System.out.println("Bombas restantes: " + jogador.inventario.quantidadeBombas);
 
         if (inimigo.vida <= 0) {
-            System.out.println(jogador.nome + " venceu a batalha!");
-
-            if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
-                System.out.println("O chefão foi derrotado!");
-                System.out.println("Parabéns! " + jogador.nome + " venceu o jogo!");
-                jogoVencido = true;
-                jogoRodando = false;
-            } else if (inimigo.raridade == RaridadeDoInimigo.ELITE) {
-                System.out.println("O inimigo de Elite foi derrotado!");
-                jogador.ganharExperiencia(30);
-                jogador.ganharOuro(30);
-
-            } else {
-                jogador.ganharExperiencia(10);
-                jogador.ganharOuro(10);
-            }
-
+            derrotarInimigo(inimigo);
         } else {
             System.out.println("O " + inimigo.nome + " sobreviveu e contra-atacou!");
             ataqueDoInimigo(inimigo);
         }
     }
+
 
     public void usarEscudo(Inimigo inimigo) {
         if (!jogador.inventario.temEscudo()) {

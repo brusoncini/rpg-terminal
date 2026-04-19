@@ -49,10 +49,10 @@ public class Inventario {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\nInventário:\n");
-        sb.append("Poções: ").append(quantidadePocoes).append("\n");
-        sb.append("Bombas: ").append(quantidadeBombas).append("\n");
-        sb.append("Escudos: ").append(quantidadeEscudos).append("\n");
+        sb.append("=== INVENTÁRIO ===\n");
+        sb.append("Poções : ").append(quantidadePocoes).append("\n");
+        sb.append("Bombas : ").append(quantidadeBombas).append("\n");
+        sb.append("Escudos: ").append(quantidadeEscudos);
 
         return sb.toString();
     }

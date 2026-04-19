@@ -60,11 +60,11 @@ public class Jogador {
 
         sb.append("=== STATUS DO JOGADOR ===\n");
         sb.append("Nome: ").append(nome).append("\n");
-        sb.append("Vida: ").append(vida).append("\n");
+        sb.append("Vida: ").append(vida).append("/").append(vidaMaxima).append("\n");
         sb.append("Ataque: ").append(ataque).append("\n");
         sb.append("Defesa: ").append(defesa).append("\n");
         sb.append("Nível: ").append(nivel).append("\n");
-        sb.append("Experiência: ").append(experiencia);
+        sb.append("Experiência: ").append(experiencia).append("/20");
 
         return sb.toString();
     }

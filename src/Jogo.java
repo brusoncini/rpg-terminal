@@ -160,7 +160,7 @@ public class Jogo {
         if (evento == 0) {
 
             if (jogador.nivel >= 5) {
-                int sorteioChefe = aleatorio.nextInt(4);
+                int sorteioChefe = aleatorio.nextInt(3);
 
                 if (sorteioChefe == 0) {
                     Inimigo chefe = criarChefe();
@@ -250,10 +250,11 @@ public class Jogo {
 
         System.out.println(jogador.nome + " caiu em uma armadilha!");
         System.out.println(jogador.nome + " recebeu " + danoDaArmadilha + " de dano.");
-        System.out.println("Vida atual: " + jogador.vida);
+        System.out.println("Vida atual: " + jogador.vida + "/" + jogador.vidaMaxima);
 
         if (jogador.vida <= 0) {
             System.out.println(jogador.nome + " não resistiu à armadilha.");
+            mostrarTitulo("=== FIM DE JOGO ===");
             jogoRodando = false;
         }
     }
@@ -264,8 +265,8 @@ public class Jogo {
             return;
         }
 
-        int cura = 15;
-        jogador.vida = jogador.vida + cura;
+        // Cura 10% da vida do jogador
+        int cura = jogador.vidaMaxima / 10;
 
         if (jogador.vida > jogador.vidaMaxima) {
             jogador.vida = jogador.vidaMaxima;
@@ -408,6 +409,16 @@ public class Jogo {
 
     public void ataqueDoInimigo(Inimigo inimigo) {
         int danoRecebido = inimigo.ataque - jogador.defesa;
+        boolean golpeDevastador = false;
+
+        if (inimigo.raridade == RaridadeDoInimigo.CHEFE) {
+            int sorteioGolpe = aleatorio.nextInt(4);
+
+            if (sorteioGolpe == 0) {
+                danoRecebido = danoRecebido + 8;
+                golpeDevastador = true;
+            }
+        }
 
         if (jogador.escudoAtivo) {
             danoRecebido = danoRecebido - 5;
@@ -417,6 +428,10 @@ public class Jogo {
 
         if (danoRecebido < 0) {
             danoRecebido = 0;
+        }
+
+        if (golpeDevastador) {
+            System.out.println("O " + inimigo.nome + " usou o GOLPE DEVASTADOR!");
         }
 
         System.out.println("O " + inimigo.nome + " atacou " + jogador.nome + "!");
@@ -492,15 +507,22 @@ public class Jogo {
             return;
         }
 
+        // Cura 25% da vida do jogador
+        int cura = jogador.vidaMaxima / 4;
+
+        if (cura < 20) {
+            cura = 20;
+        }
+
         jogador.inventario.usarPocao();
-        jogador.vida = jogador.vida + 20;
+        jogador.vida = jogador.vida + cura;
 
         if (jogador.vida > jogador.vidaMaxima) {
             jogador.vida = jogador.vidaMaxima;
         }
 
         System.out.println(jogador.nome + " usou uma poção!");
-        System.out.println("A vida de " + jogador.nome + " foi recuperada.");
+        System.out.println("Recuperou " + cura + " de vida.");
         System.out.println("Vida atual: " + jogador.vida + "/" + jogador.vidaMaxima);
         System.out.println("Poções restantes: " + jogador.inventario.quantidadePocoes);
 
@@ -577,10 +599,11 @@ public class Jogo {
 
     public Inimigo criarElite() {
         int tipoInimigo = aleatorio.nextInt(2);
+
         if (tipoInimigo == 0) {
-            return new Inimigo("Capitão Orc", RaridadeDoInimigo.ELITE, 80, 15);
+            return new Inimigo("Capitão Orc", RaridadeDoInimigo.ELITE, 90, 13);
         } else {
-            return new Inimigo("Cavaleiro Sombrio", RaridadeDoInimigo.ELITE, 80, 15);
+            return new Inimigo("Cavaleiro Sombrio", RaridadeDoInimigo.ELITE, 70, 17);
         }
     }
 

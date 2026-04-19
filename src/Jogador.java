@@ -25,6 +25,7 @@ public class Jogador {
 
     public void mostrarStatus() {
         System.out.println(this);
+        System.out.println();
         System.out.println(inventario.toString());
     }
 

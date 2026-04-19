@@ -1,3 +1,5 @@
+package entidades;
+
 public class Inventario {
     int quantidadePocoes;
     int quantidadeBombas;
@@ -7,6 +9,30 @@ public class Inventario {
         this.quantidadePocoes = 2;
         this.quantidadeBombas = 1;
         this.quantidadeEscudos = 1;
+    }
+
+    public int getQuantidadePocoes() {
+        return quantidadePocoes;
+    }
+
+    public void setQuantidadePocoes(int quantidadePocoes) {
+        this.quantidadePocoes = quantidadePocoes;
+    }
+
+    public int getQuantidadeBombas() {
+        return quantidadeBombas;
+    }
+
+    public void setQuantidadeBombas(int quantidadeBombas) {
+        this.quantidadeBombas = quantidadeBombas;
+    }
+
+    public int getQuantidadeEscudos() {
+        return quantidadeEscudos;
+    }
+
+    public void setQuantidadeEscudos(int quantidadeEscudos) {
+        this.quantidadeEscudos = quantidadeEscudos;
     }
 
     public void adicionarPocao() {

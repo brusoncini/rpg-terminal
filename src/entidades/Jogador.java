@@ -1,3 +1,5 @@
+package entidades;
+
 public class Jogador {
     String nome;
     int vida;
@@ -23,10 +25,98 @@ public class Jogador {
         inventario = new Inventario();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getVidaMaxima() {
+        return vidaMaxima;
+    }
+
+    public void setVidaMaxima(int vidaMaxima) {
+        this.vidaMaxima = vidaMaxima;
+    }
+
+    public int getAtaque() {
+        return ataque;
+    }
+
+    public void setAtaque(int ataque) {
+        this.ataque = ataque;
+    }
+
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(int defesa) {
+        this.defesa = defesa;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public int getOuro() {
+        return ouro;
+    }
+
+    public void setOuro(int ouro) {
+        this.ouro = ouro;
+    }
+
+    public boolean isEscudoAtivo() {
+        return escudoAtivo;
+    }
+
+    public void setEscudoAtivo(boolean escudoAtivo) {
+        this.escudoAtivo = escudoAtivo;
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
     public void mostrarStatus() {
         System.out.println(this);
         System.out.println();
         System.out.println(inventario.toString());
+    }
+
+    public void curar(int cura) {
+        vida = vida + cura;
+    }
+
+    public void tomarDano(int dano) {
+        vida = vida - dano;
     }
 
     public void ganharExperiencia(int quantidade) {
@@ -41,6 +131,11 @@ public class Jogador {
     public void ganharOuro(int quantidade) {
         ouro = ouro + quantidade;
         System.out.println(nome + " ganhou " + quantidade + " de ouro!");
+    }
+
+    public void gastarOuro(int quantidade) {
+        ouro = ouro - quantidade;
+        System.out.println("Ouro restante: " + ouro);
     }
 
     public void subirNivel() {

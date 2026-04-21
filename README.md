@@ -1,9 +1,10 @@
 # ⚔️ RPG em Terminal
 
 ![Java](https://img.shields.io/badge/Java-22-orange?logo=openjdk&logoColor=white)
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
-![Versão](https://img.shields.io/badge/versão-1.0.0-brightgreen)
-![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?logo=windows&logoColor=white)
+![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?logo=gitforwindows&logoColor=white)
+![Status](https://img.shields.io/badge/status-finalizado-green)
+![Versão](https://img.shields.io/badge/versão-1.0.0-lightblue)
+![Projeto](https://img.shields.io/badge/tipo-projeto%20pessoal-purple)
 
 Projeto desenvolvido em **Java**, utilizando princípios de **programação orientada a objetos**.  
 O jogo acontece no terminal e permite criar um personagem, explorar o mapa, enfrentar inimigos comuns, elites e um chefe final, além de usar itens, ganhar ouro e evoluir de nível.
